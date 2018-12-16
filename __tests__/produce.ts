@@ -55,6 +55,15 @@ it("can update readonly state via standard api", () => {
     expect(newState).toEqual(expectedState)
 })
 
+it("can infer state type from recipe function", () => {
+    let foo = produce((_: string | number) => {}, 1)
+    foo("")
+
+    // When the function type is implicit, the initial state infers the `State` type.
+    let bar = produce(_ => {}, 1)
+    bar(2)
+})
+
 it("can update readonly state via curried api", () => {
     const newState = produce<State>(draft => {
         draft.num++
