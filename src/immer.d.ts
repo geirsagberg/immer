@@ -81,7 +81,7 @@ export interface IProduce {
 
     /** Curried producer with an initial state */
     <State, Result = any>(
-        recipe: (this: Draft<State>, draft: Draft<State>) => void | Result,
+        recipe: (this: Draft<State>, draft: Draft<State>) => Result,
         defaultBase: State
     ): (base: State | undefined) => void extends Result ? State : Result
 
@@ -91,7 +91,7 @@ export interface IProduce {
             this: Draft<State>,
             draft: Draft<State>,
             ...extraArgs: Args
-        ) => void | Result
+        ) => Result
     ): (base: State, ...extraArgs: Args) => void extends Result ? State : Result
 }
 
