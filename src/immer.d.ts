@@ -1,3 +1,6 @@
+/** For resolving mapped types */
+type Id<T> = T
+
 /** Object types that should never be mapped */
 type AtomicObject =
     | Function
@@ -25,15 +28,15 @@ export type DraftObject<T> = T extends object
         : {-readonly [P in keyof T]: Draft<T[P]>}
     : T
 
-export type DraftArray<T> = Array<
-    T extends ReadonlyArray<any>
-        ? {[P in keyof T]: Draft<T>}[keyof T]
-        : DraftObject<T>
->
+export type DraftArray<T> = T extends ReadonlyArray<any>
+    ? {[P in keyof T]: Array<Draft<T>>}[keyof T]
+    : Array<DraftObject<T>>
 
-export type DraftTuple<T extends any[]> = {
-    [P in keyof T]: T[P] extends T[number] ? Draft<T[P]> : never
-}
+type ArrayMethod = Exclude<keyof [], number>
+
+export type DraftTuple<T extends ReadonlyArray<any>> = Id<
+    {[P in keyof T]: P extends ArrayMethod ? never : Draft<T[P]>}
+>
 
 export type Draft<T> = T extends any[]
     ? IsFinite<T> extends true
