@@ -30,6 +30,14 @@ declare const _: any
     val = exactType(fromDraft(toDraft(val)), val)
 }
 
+// Tuple (nested in two mutable arrays)
+{
+    let val: [1, 2][][] = _
+    let draft: typeof val = _
+    draft = exactType(toDraft(val), draft)
+    val = fromDraft(draft)
+}
+
 // Tuple (nested in two readonly arrays)
 {
     let val: ReadonlyArray<ReadonlyArray<[1, 2]>> = _
