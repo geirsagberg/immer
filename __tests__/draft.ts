@@ -143,6 +143,26 @@ declare const _: any
     val = exactType(fromDraft(toDraft(val)), val)
 }
 
+// Class type (mutable)
+{
+    class Foo {
+        constructor(public bar: string) {}
+    }
+    let val: Foo = _
+    val = exactType(toDraft(val), val)
+    val = exactType(fromDraft(toDraft(val)), val)
+}
+
+// Class type (readonly)
+{
+    class Foo {
+        constructor(readonly bar: string) {}
+    }
+    let val: Foo = _
+    val = exactType(toDraft(val), val)
+    val = exactType(fromDraft(toDraft(val)), val)
+}
+
 // Map instance
 {
     let val: Map<any, any> = _
