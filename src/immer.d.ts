@@ -15,12 +15,11 @@ type AtomicObject =
     | Number
     | String
 
-/** Use type inference to know when an array is finite */
-type IsFinite<T extends any[]> = T extends never[]
+type IsTuple<T extends ReadonlyArray<any>> = T extends never[]
     ? true
     : T extends ReadonlyArray<infer U>
     ? (U[] extends T ? false : true)
-    : true
+    : never
 
 export type DraftObject<T> = T extends object
     ? T extends AtomicObject
@@ -39,7 +38,7 @@ export type DraftTuple<T extends ReadonlyArray<any>> = Id<
 >
 
 export type Draft<T> = T extends any[]
-    ? IsFinite<T> extends true
+    ? IsTuple<T> extends true
         ? DraftTuple<T>
         : DraftArray<T[number]>
     : T extends ReadonlyArray<any>
