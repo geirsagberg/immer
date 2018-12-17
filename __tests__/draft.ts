@@ -46,6 +46,16 @@ declare const _: any
     val = fromDraft(draft)
 }
 
+// Readonly tuple
+{
+    // TODO: Uncomment this when readonly tuples are supported.
+    //       More info: https://stackoverflow.com/a/53822074/2228559
+    // let val: Readonly<[1, 2]> = _
+    // let draft: [1, 2] = _
+    // draft = exactType(toDraft(val), draft)
+    // val = fromDraft(draft)
+}
+
 // Mutable array
 {
     let val: string[] = _
