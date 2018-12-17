@@ -274,3 +274,12 @@ declare const _: any
     draft = exactType(toDraft(val), val)
     val = exactType(fromDraft(draft), val)
 }
+
+// Generic type
+{
+    const $ = <T>(val: ReadonlyArray<T>) => {
+        let draft: T[] = _
+        draft = exactType(toDraft(val), draft)
+        val = exactType(fromDraft(draft), val)
+    }
+}
