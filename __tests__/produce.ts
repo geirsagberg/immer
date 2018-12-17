@@ -116,6 +116,7 @@ it("works with generic parameters", () => {
         return produce(array, draft => {
             draft.push(elem)
             draft.splice(index, 0, elem)
+            draft.concat([elem])
         })
     }
 })
