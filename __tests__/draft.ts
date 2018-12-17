@@ -4,11 +4,14 @@ import {Draft, DraftTuple} from "../dist/immer.js"
 declare const toDraft: <T>(value: T) => Draft<T>
 declare const fromDraft: <T>(draft: Draft<T>) => T
 
+// prettier-ignore
+type AssertEqual<T, U> = (<G>() => G extends T ? 1 : 0) extends (<G>() => G extends U ? 1 : 0) ? unknown : never
+
 /** Trigger a compiler error when a value is _not_ an exact type. */
-declare const exactType: <T, U extends T>(
-    draft?: U,
-    expected?: T
-) => T extends U ? T : 1 & 0
+declare const exactType: <T, U>(
+    draft: T & AssertEqual<T, U>,
+    expected: U & AssertEqual<T, U>
+) => U
 
 // To remove TS2454 errors.
 declare const _: any
