@@ -110,3 +110,12 @@ it("can apply patches", () => {
 
     expect(applyPatches({}, patches)).toEqual({x: 4})
 })
+
+it("works with generic parameters", () => {
+    const _ = <T>(array: ReadonlyArray<T>, index: number, elem: T) => {
+        return produce(array, draft => {
+            draft.push(elem)
+            draft.splice(index, 0, elem)
+        })
+    }
+})
