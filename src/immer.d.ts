@@ -21,19 +21,15 @@ type IsTuple<T extends ReadonlyArray<any>> = T extends never[]
     ? (U[] extends T ? false : true)
     : never
 
-export type DraftObject<T> = T extends object
-    ? T extends AtomicObject
-        ? T
-        : {-readonly [P in keyof T]: Draft<T[P]>}
-    : T
+export type DraftObject<T extends object> = T extends AtomicObject
+    ? T
+    : {-readonly [P in keyof T]: Draft<T[P]>}
 
-export type DraftArray<T> = T extends ReadonlyArray<any>
-    ? {[P in keyof T]: Array<Draft<T>>}[keyof T]
-    : Array<DraftObject<T>>
+export type DraftArray<T, U = keyof T> = {[P in U]: Array<T>}[U]
 
 type ArrayMethod = Exclude<keyof [], number>
 
-export type DraftTuple<T extends ReadonlyArray<any>> = Id<
+export type DraftTuple<T extends any[]> = Id<
     {[P in keyof T]: P extends ArrayMethod ? never : Draft<T[P]>}
 >
 
